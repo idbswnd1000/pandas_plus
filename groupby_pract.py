@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 plt.rcParams['font.family'] = 'Malgun Gothic'
 plt.rcParams['axes.unicode_minus'] = False
 
@@ -25,7 +25,13 @@ if __name__ == '__main__':
         aggfunc=sum,
         fill_value=0
     )
-    print(result)
+    sns.heatmap(
+        result,
+        annot=True,
+        fmt=".0f",
+        cmap="YlGnBu"
+    )
+    plt.show()
 
     exit()
     result = merged_sales.groupby(

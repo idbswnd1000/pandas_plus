@@ -24,6 +24,17 @@ if __name__ == '__main__':
        '제품명', '색상', '원가', '단가', '제품분류명', '분류명', '프로모션', '할인율', '채널명']]
     merged_sales.rename(columns={'지역_x': '지역', 'Quantity': '수량'},inplace=True)
     # merged_sales = merged_sales.rename(columns={'지역_x':'지역', 'Quantity':'수량'}) # 다만 최근 권장은 이 형식
+    merged_sales['판매금액'] = (
+            merged_sales['수량'] *
+            (merged_sales['단가'] * (1 - merged_sales['할인율']))
+    )
+    merged_sales['순이익'] = (
+            merged_sales['수량'] *
+            (
+                    merged_sales['단가'] * (1 - merged_sales['할인율'])
+                    - merged_sales['원가']
+            )
+    )
 
     merged_sales.to_pickle('./data/merged_sales.pkl')# 데이터베이스와 유사하나 파일이나 동시 접근 불가, 보안 취약
     print(merged_sales.keys())
